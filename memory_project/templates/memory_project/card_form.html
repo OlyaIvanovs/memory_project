@@ -1,0 +1,21 @@
+{% extends "memory_project/base.html" %}
+
+
+{% block contents %}
+
+
+    <h1>New Card</h1>
+    {% if form.errors %}
+        <p style="color: red;">
+            Please correct the error{{ form.errors|pluralize }} below.
+        </p>
+    {% endif %}
+    <form action="" method="post">
+        <table class="table">
+            {{ form.as_table }}
+        </table>
+        {% csrf_token %}
+        <input type="submit" class="btn btn-success" value="OK">
+    </form>
+
+{% endblock %}

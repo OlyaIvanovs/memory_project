@@ -1,0 +1,99 @@
+{% extends "memory_project/base.html" %}
+
+
+{% block contents %}
+    <h1 style="text-align: center;"></h1>
+    <ul class="nav nav-pills">
+        <li><a href="{% url 'memory:all' %}">All words</a></li>
+        <li role="presentation"><a href="{% url 'memory:add_card' %}"><span class="glyphicon glyphicon-plus"></span>Add new card</a></li>
+    </ul>
+    {% if card %}
+    <div>
+        <div style="float: right;">
+            <a href="{% url 'memory:card_change' card.id %}" class="glyphicon glyphicon-pencil" title="Change"></a>
+            <a href="{% url 'memory:card_delete' card.id %}" class="glyphicon glyphicon-remove" title="Delete"></a>
+        </div>
+        <div style="clear: both; margin-bottom: 20px;"></div>
+        <ul class="list-group">
+            <li class="list-group-item" style="text-align: center; min-height: 150px;">
+                <div style="text-align: left; margin-bottom: 30px;">Question</div>
+                <h3>{{ card.first_side_text }}</h3>
+            </li>
+            <li class="list-group-item" style="text-align:center; min-height: 150px;">
+                <div style="text-align: left; margin-bottom: 30px;">Answer</div>
+                {% if request.GET.answer %}
+                <h3>{{ card.second_side_text }}</h3>
+                {% else %}
+                <span id="show_answer_link"><a class="btn btn-info"  href="{% url 'memory:index' %}?answer=show">Show answer</a></span>
+                {% endif %}
+            </li>
+            <li class="list-group-item">
+                <div style="text-align: left; margin-bottom: 30px;">Grade your answer</div>
+                <form action="{% url 'memory:card_renew' card.id %}" method="post" id="form">
+                {% csrf_token %}
+                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                    {% for choice in card.VALUE_CHOICES %}
+                    <div class="btn-group" style="text-align: center;" role="group">
+                        <input type="submit"
+                               class="btn btn-info {% if card.value == choice.0 %} btn-warning {% endif %}" value="{{ choice.0 }}"
+                               id="choice{{ choice.0 }}"
+                               name="choice">
+                        </input>
+                    </div>
+                    {% endfor %}
+                </div>
+                </form>
+            </li>
+        </ul>
+        <b>Words for practice today: {{ list_len }}</b>
+    </div>
+    {% else %}
+    There is no card for practice today.
+    {% endif %}
+
+    <script>
+        $(document).ready(function() {
+            $(window).keypress(function(e) {
+                hr = window.location.href;
+                if (e.keyCode == 0 || e.keyCode == 32) {
+                    if(hr.indexOf("answer") == -1)
+                        href = hr + "?answer=show";
+                    window.location.href = href;
+                } else if (e.keyCode == 48) {
+                    console.log("48");
+                    var $el = $("#choice0");
+                    $el.siblings().removeClass('btn_warning');
+                    $el.addClass('btn_warning');
+                    $el.click();
+                } else if (e.keyCode == 49) {
+                    var $el = $("#choice1");
+                    $el.siblings().removeClass('btn_warning');
+                    $el.addClass('btn_warning');
+                    $el.click();
+                } else if (e.keyCode == 50) {
+                    var $el = $("#choice2");
+                    $el.siblings().removeClass('btn_warning');
+                    $el.addClass('btn_warning');
+                    $el.delay(5000).click();
+                } else if (e.keyCode == 51) {
+                    var $el = $("#choice3");
+                    $el.siblings().removeClass('btn_warning');
+                    $el.addClass('btn_warning');
+                    $el.click();
+                } else if (e.keyCode == 52) {
+                    var $el = $("#choice4");
+                    $el.siblings().removeClass('btn_warning');
+                    $el.addClass('btn_warning');
+                    $el.click();
+                } else if (e.keyCode == 53) {
+                    var $el = $("#choice5");
+                    $el.siblings().removeClass('btn_warning');
+                    $el.addClass('btn_warning');
+                    $el.click();
+                }
+
+            })
+        });
+    </script>
+
+{% endblock %}

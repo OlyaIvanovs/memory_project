@@ -1,0 +1,58 @@
+{% extends "memory_project/base.html" %}
+
+
+{% block contents %}
+
+    <table class="table table-bordered table-hover">
+    <tr>
+        <th>First side</th>
+        <th>Second side</th>
+        <th>Progress</th>
+    </tr>
+    {% for card in cards %}
+    <tr>
+        <td class="text-primary">{{ card.first_side_text }}</td>
+        <td class="text-success">{{ card.second_side_text }}</td>
+        <td>
+            {% if card.value == 0 %}
+            <div style="border: black; width: 40px; length: 100px;">
+                <div></div>
+            </div>
+            {% elif card.value == 1 %}
+            <div style="border: black; width: 100%; height: 60%; position: relative;
+                border-style: solid; border-color: #000; text-align: center;">
+                <div style="position: absolute; width: 100%; height: 100%;">10%</div>
+                <div style="width: 10%; height: 100%; background-color: #5bc0de;">&nbsp;</div>
+            </div>
+            {% elif card.value == 2 %}
+            <div style="border: black; width: 100%; height: 60%; position: relative;
+                border-style: solid; border-color: #000; text-align: center;">
+                <div style="position: absolute; width: 100%; height: 100%;">30%</div>
+                <div style="width: 30%; height: 100%; background-color: #5bc0de;">&nbsp;</div>
+            </div>
+            {% elif card.value == 3 %}
+            <div style="border: black; width: 100%; height: 60%; position: relative;
+                border-style: solid; border-color: #000; text-align: center;">
+                <div style="position: absolute; width: 100%; height: 100%;">50%</div>
+                <div style="width: 50%; height: 100%; background-color: #5bc0de;">&nbsp;</div>
+            </div>
+            {% elif card.value == 4 %}
+            <div style="border: black; width: 100%; height: 60%; position: relative;
+                border-style: solid; border-color: #000; text-align: center;">
+                <div style="position: absolute; width: 100%; height: 100%;">80%</div>
+                <div style="width: 80%; height: 100%; background-color: #5bc0de;">&nbsp;</div>
+            </div>
+            {% elif card.value == 5 %}
+            <div style="border: black; width: 100%; height: 60%; position: relative;
+                border-style: solid; border-color: #000; text-align: center;">
+                <div style="position: absolute; width: 100%; height: 100%;">100%</div>
+                <div style="width: 100%; height: 100%; background-color: #5bc0de;">&nbsp;</div>
+            </div>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+    {{ list_len }}
+
+{% endblock %}

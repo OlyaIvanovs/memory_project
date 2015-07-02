@@ -1,0 +1,31 @@
+<ul style="list-style-type:none;">
+    {% for card in card_list %}
+    <li>
+        <div style="margin-bottom: 60px;">
+            <ul class="list-group">
+                <li class="list-group-item" style="text-align: center;"><h3>{{ card.first_side_text }}</h3></li>
+                <li class="list-group-item" style="text-align:center;"><h3>{{ card.second_side_text }}</h3></li>
+                <li class="list-group-item">
+                    <form action="{% url 'memory:card_renew' card.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                        {% for choice in card.VALUE_CHOICES %}
+                        <div class="btn-group" style="text-align: center;" role="group">
+                            <input type="radio" value="{{ choice.0 }}" name="choice" {% if card.value == choice.0 %} checked {% endif %}>
+                                {{ choice.0 }}
+                            </input>
+                        </div>
+                        {% endfor %}
+                    </div>
+                     <div class="center-block" style="text-align:center; margin:20px 0 10px 0;">
+                         <input type="submit" class="btn btn-success" value="OK">
+                     </div>
+                    </form>
+                </li>
+            </ul>
+            <a href="{% url 'memory:card_change' card.id %}" class="btn btn-info">Change</a>
+            <a href="{% url 'memory:card_delete' card.id %}" class="btn btn-danger">Delete</a>
+        </div>
+    </li>
+    {% endfor %}
+    </ul>
