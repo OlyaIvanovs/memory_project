@@ -5,10 +5,10 @@ from .models import Card
 class CardForm(ModelForm):
     class Meta:
         model = Card
-        fields = ['first_side_text', 'second_side_text', 'value']
+        fields = ['first_side_text', 'second_side_text', 'extra_text', 'value']
 
 
 class CardChangeForm(ModelForm):
     class Meta:
         model = Card
-        fields = ['first_side_text', 'second_side_text']
+        fields = ['first_side_text', 'second_side_text', 'extra_text']

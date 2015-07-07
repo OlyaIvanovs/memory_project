@@ -12,5 +12,6 @@ class Card(models.Model):
     )
     first_side_text = models.CharField(max_length=200)
     second_side_text = models.CharField(max_length=200)
+    extra_text = models.CharField(max_length=200, blank=False, null=True)
     show_date = models.DateTimeField('show date')
     value = models.IntegerField(max_length=10, choices=VALUE_CHOICES, default=2)

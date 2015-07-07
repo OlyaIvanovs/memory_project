@@ -19,12 +19,22 @@
                 <div style="text-align: left; margin-bottom: 30px;">Question</div>
                 <h3>{{ card.first_side_text }}</h3>
             </li>
+            {% if card.extra_text %}
+            <li class="list-group-item" style="text-align:center; min-height: 150px;">
+                <div style="text-align: left; margin-bottom: 30px;">Example</div>
+                {% if request.GET.extra %}
+                <h3>{{ card.extra_text }}</h3>
+                {% else %}
+                <span id="show_extra_link"><p class="btn btn-info" id="show_extra">Show Example</p></span>
+                {% endif %}
+            </li>
+            {% endif %}
             <li class="list-group-item" style="text-align:center; min-height: 150px;">
                 <div style="text-align: left; margin-bottom: 30px;">Answer</div>
                 {% if request.GET.answer %}
                 <h3>{{ card.second_side_text }}</h3>
                 {% else %}
-                <span id="show_answer_link"><a class="btn btn-info"  href="{% url 'memory:index' %}?answer=show">Show answer</a></span>
+                <span id="show_answer_link"><p class="btn btn-info"  id="show_answer">Show answer</p></span>
                 {% endif %}
             </li>
             <li class="list-group-item">
@@ -53,14 +63,35 @@
 
     <script>
         $(document).ready(function() {
-            $(window).keypress(function(e) {
-                hr = window.location.href;
-                if (e.keyCode == 0 || e.keyCode == 32) {
-                    if(hr.indexOf("answer") == -1)
+            hr = window.location;
+            $("#show_answer").on('click', function() {
+                if(hr.href.indexOf("answer") == -1) {
+                    if (hr.search)
+                        href = hr + "&answer=show";
+                    else
                         href = hr + "?answer=show";
+                }
+                 window.location.href = href;
+            })
+            $("#show_extra").on('click', function() {
+                if(hr.href.indexOf("extra") == -1) {
+                    if (hr.search)
+                        href = hr + "&extra=show";
+                    else
+                        href = hr + "?extra=show";
+                }
+                 window.location.href = href;
+            })
+            $(window).keypress(function(e) {
+                if (e.keyCode == 0 || e.keyCode == 32) {
+                    if(hr.href.indexOf("answer") == -1) {
+                        if (hr.search)
+                            href = hr + "&answer=show";
+                        else
+                            href = hr + "?answer=show";
+                    }
                     window.location.href = href;
                 } else if (e.keyCode == 48) {
-                    console.log("48");
                     var $el = $("#choice0");
                     $el.siblings().removeClass('btn_warning');
                     $el.addClass('btn_warning');
