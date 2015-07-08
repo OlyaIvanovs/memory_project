@@ -2,7 +2,9 @@
 
 
 {% block contents %}
-
+    <br>
+    There are <b>{{ list_len }}</b> words in your vocabulary
+    <br><br>
     <table class="table table-bordered table-hover">
     <tr>
         <th>First side</th>
@@ -53,6 +55,5 @@
     </tr>
     {% endfor %}
     </table>
-    {{ list_len }}
 
 {% endblock %}

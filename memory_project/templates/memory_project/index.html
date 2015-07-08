@@ -4,8 +4,14 @@
 {% block contents %}
     <h1 style="text-align: center;"></h1>
     <ul class="nav nav-pills">
-        <li><a href="{% url 'memory:all' %}">All words</a></li>
-        <li role="presentation"><a href="{% url 'memory:add_card' %}"><span class="glyphicon glyphicon-plus"></span>Add new card</a></li>
+        <li><a href="{% url 'memory:all' %}" class="text-danger">All words</a></li>
+        <li role="presentation"><a href="{% url 'memory:add_card' %}"><span class="glyphicon glyphicon-plus"></span>
+            Add new card</a>
+        </li>
+        <li role="presentation"><a href="{% url 'memory:add_text' %}" class="text-success">
+            <span class="glyphicon glyphicon-plus"></span> Add text to translate</a>
+        </li>
+        <li role="presentation"><a href="{% url 'memory:all_texts' %}" class="text-warning">All texts</a></li>
     </ul>
     {% if card %}
     <div>

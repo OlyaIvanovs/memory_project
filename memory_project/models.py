@@ -15,3 +15,9 @@ class Card(models.Model):
     extra_text = models.CharField(max_length=200, blank=False, null=True)
     show_date = models.DateTimeField('show date')
     value = models.IntegerField(max_length=10, choices=VALUE_CHOICES, default=2)
+
+
+class TranslateText(models.Model):
+    title = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, unique=True)
+    content = models.TextField()

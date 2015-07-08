@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.core.urlresolvers import reverse
 from .forms import CardForm, CardChangeForm
-from .models import Card
+from .models import Card, TranslateText
 
 
 def index(request):
@@ -75,9 +75,25 @@ def add_card(request):
     return render(request, 'memory_project/card_form.html', {'form': form})
 
 
+def add_text(request):
+    card_list = Card.objects.all()
+    list_len = len(card_list)
+    if list_len > 0:
+        context = {'cards': card_list, 'list_len': list_len}
+    return render(request, 'memory_project/all.html', context)
+
+
 def all(request):
     card_list = Card.objects.all()
     list_len = len(card_list)
     if list_len > 0:
         context = {'cards': card_list, 'list_len': list_len}
     return render(request, 'memory_project/all.html', context)
+
+
+def all_texts(request):
+    text_list = TranslateText.objects.all()
+    list_len = len(text_list)
+    if list_len > 0:
+        context = {'texts': text_list, 'list_len': list_len}
+    return render(request, 'memory_project/all_texts.html', context)
