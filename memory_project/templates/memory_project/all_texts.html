@@ -1,1 +1,42 @@
-fdfhkjhsdfkjh
+{% extends "memory_project/base.html" %}
+
+
+{% block contents %}
+There are <b>{{ list_len }}</b> texts
+<a style="float: right;" href="{% url 'memory:add_text' %}" class="text-success"><span class="glyphicon glyphicon-plus"></span>
+    Add text to translate
+</a>
+<br><br>
+<div class="list-group">
+    {% for text in texts %}
+    <a href="{% url 'memory:text_show' text.slug %}" class="list-group-item">
+        <h4 class="list-group-item-heading">{{ text.title }}</h4>
+        <p class="list-group-item-text">{{ text.content|truncatechars:500 }}...</p>
+    </a>
+    {% endfor %}
+</div>
+
+<nav>
+    <ul class="pagination">
+        {% if texts.has_previous %}
+        <li>
+            <a href="?page={{ texts.previous_page_number }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        <li><a href="?page=1">1</a></li>
+        <li><a href="#">...</a></li>
+        {% endif %}
+        <li class="active"><a href="#">{{ texts.number }}</a></li>
+        {% if texts.has_next %}
+        <li><a href="#">...</a></li>
+        <li><a href="?page={{ texts.paginator.num_pages }}">{{ texts.paginator.num_pages }}</a></li>
+        <li>
+            <a href="?page={{ texts.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endblock contents %}

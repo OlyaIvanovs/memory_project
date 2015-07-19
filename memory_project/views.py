@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.core.urlresolvers import reverse
-from .forms import CardForm, CardChangeForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from .forms import CardForm, CardChangeForm, TextForm
 from .models import Card, TranslateText
 
 
@@ -76,11 +76,14 @@ def add_card(request):
 
 
 def add_text(request):
-    card_list = Card.objects.all()
-    list_len = len(card_list)
-    if list_len > 0:
-        context = {'cards': card_list, 'list_len': list_len}
-    return render(request, 'memory_project/all.html', context)
+    if request.method == 'POST':
+        form = TextForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/memory/all_texts')
+    else:
+        form = TextForm()
+    return render(request, 'memory_project/text_form.html', {'form': form})
 
 
 def all(request):
@@ -93,7 +96,18 @@ def all(request):
 
 def all_texts(request):
     text_list = TranslateText.objects.all()
+    paginator = Paginator(text_list, 3)
+    page = request.GET.get('page')
     list_len = len(text_list)
-    if list_len > 0:
-        context = {'texts': text_list, 'list_len': list_len}
-    return render(request, 'memory_project/all_texts.html', context)
+    try:
+        texts = paginator.page(page)
+    except PageNotAnInteger:
+        texts = paginator.page(1)
+    except EmptyPage:
+        texts = paginator.page(paginator.num_pages)
+    return render(request, 'memory_project/all_texts.html', {'texts': texts, 'list_len': list_len})
+
+
+def text_show(request, text_slug):
+    text = get_object_or_404(TranslateText, slug=text_slug)
+    return render(request, 'memory_project/text_show.html', {'text': text})

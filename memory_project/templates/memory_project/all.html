@@ -2,8 +2,10 @@
 
 
 {% block contents %}
-    <br>
     There are <b>{{ list_len }}</b> words in your vocabulary
+    <a style="float: right;" href="{% url 'memory:add_card' %}">
+        <span class="glyphicon glyphicon-plus"></span>Add new word
+    </a>
     <br><br>
     <table class="table table-bordered table-hover">
     <tr>

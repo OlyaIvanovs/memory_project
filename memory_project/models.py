@@ -19,5 +19,5 @@ class Card(models.Model):
 
 class TranslateText(models.Model):
     title = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=50, unique=True)
     content = models.TextField()

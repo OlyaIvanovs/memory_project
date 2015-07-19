@@ -2,22 +2,24 @@
 
 
 {% block contents %}
-    <h1 style="text-align: center;"></h1>
-    <ul class="nav nav-pills">
-        <li><a href="{% url 'memory:all' %}" class="text-danger">All words</a></li>
+    <ul class="nav" style="position: absolute; right: 0; top: 60px;">
         <li role="presentation"><a href="{% url 'memory:add_card' %}"><span class="glyphicon glyphicon-plus"></span>
-            Add new card</a>
+            Add a new word</a>
         </li>
         <li role="presentation"><a href="{% url 'memory:add_text' %}" class="text-success">
-            <span class="glyphicon glyphicon-plus"></span> Add text to translate</a>
+            <span class="glyphicon glyphicon-plus"></span> Add a text to translate</a>
         </li>
+    </ul>
+    <ul class="nav" style="position: absolute; right: 200px; top: 60px;">
+        <li><a href="{% url 'memory:all' %}" class="text-danger">All words</a></li>
         <li role="presentation"><a href="{% url 'memory:all_texts' %}" class="text-warning">All texts</a></li>
     </ul>
     {% if card %}
     <div>
         <div style="float: right;">
             <a href="{% url 'memory:card_change' card.id %}" class="glyphicon glyphicon-pencil" title="Change"></a>
-            <a href="{% url 'memory:card_delete' card.id %}" class="glyphicon glyphicon-remove" title="Delete"></a>
+            <a href="{% url 'memory:card_delete' card.id %}" class="glyphicon glyphicon-remove text-danger" title="Delete"></a>
+            <a href="{% url 'memory:add_card' %}" class="glyphicon glyphicon-plus text-success" title="Add a new word"></a>
         </div>
         <div style="clear: both; margin-bottom: 20px;"></div>
         <ul class="list-group">
@@ -29,7 +31,7 @@
             <li class="list-group-item" style="text-align:center; min-height: 150px;">
                 <div style="text-align: left; margin-bottom: 30px;">Example</div>
                 {% if request.GET.extra %}
-                <h3>{{ card.extra_text }}</h3>
+                <b style="color: #888;">{{ card.extra_text }}</b>
                 {% else %}
                 <span id="show_extra_link"><p class="btn btn-info" id="show_extra">Show Example</p></span>
                 {% endif %}

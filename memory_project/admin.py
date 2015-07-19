@@ -13,4 +13,3 @@ class TranslateTextAdmin(admin.ModelAdmin):
 
 admin.site.register(Card, CardAdmin)
 admin.site.register(TranslateText, TranslateTextAdmin)
-

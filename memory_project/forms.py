@@ -1,5 +1,6 @@
 from django.forms import ModelForm, Textarea
-from .models import Card
+from django.utils.text import slugify
+from .models import Card, TranslateText
 
 
 class CardForm(ModelForm):
@@ -16,7 +17,6 @@ class CardForm(ModelForm):
         }
 
 
-
 class CardChangeForm(ModelForm):
     class Meta:
         model = Card
@@ -29,3 +29,20 @@ class CardChangeForm(ModelForm):
         widgets = {
             'extra_text': Textarea(attrs={'cols': 40, 'rows': 5}),
         }
+
+
+class TextForm(ModelForm):
+    class Meta:
+        model = TranslateText
+        fields = ['title', 'content']
+        labels = {
+            'title': ('Title'),
+            'content': ('Your Text'),
+        }
+
+    def save(self):
+        instance = super(TextForm, self).save(commit=False)
+        max_length = TranslateText._meta.get_field('slug').max_length
+        instance.slug = slugify(instance.title)[:max_length]
+        instance.save()
+        return instance

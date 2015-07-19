@@ -1,9 +1,21 @@
 {% extends "memory_project/base.html" %}
-{% load staticfiles %}
 
 
 {% block contents %}
+<h2>{{ text.title }}</h2>
+<div>
+    <p>
+        {{ text.content|linebreaksbr }}
+    </p>
+</div>
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     {% if form.errors %}
         <p style="color: red;">
             Please correct the error{{ form.errors|pluralize }} below.
@@ -13,7 +25,7 @@
         <a id="g_translate" href="" style="position: absolute; left: -50px; top: 0;">
             <img src="{% static 'img/Google-Translate-icon.png' %}">
         </a>
-        <form action="{% url 'askjdakshj' %}" method="post">
+        <form action="" method="post">
             <table class="table">
                 {{ form.as_table }}
             </table>
@@ -21,20 +33,5 @@
             <input type="submit" class="btn btn-success" value="OK">
         </form>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            $("#g_translate").on('click', function() {
-                event.preventDefault();
-                var win_url = 'https://translate.google.com/#en/ru/'
-                var f = $('#id_first_side_text').val();
-                if (f) {
-                    win_url = win_url + f;
-                    console.log(win_url)
-                }
-                window.open(win_url, '_blank');
-            })
-        });
-    </script>
-
+</div>
 {% endblock %}
